@@ -267,3 +267,20 @@ body {
 #logo{
   width: 85px;
 }
+
+
+
+#trash{
+  width: 25px;
+  padding: 1px;
+  cursor: pointer;
+}
+
+#prohead{
+  margin-right: 20px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 15px;
+}

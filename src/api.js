@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = "http://127.0.0.1:8000"
+export const baseUrl = "http://127.0.0.1:8000"
 
 export const getToken = ({ auth, username, password, onSuccess }) => {
   axios.post(`${baseUrl}/token/`, {
@@ -55,7 +55,7 @@ export const createUser = ({ username, password, firstName, lastName }) => {
 export const getImages = ({ auth }) => {
   return axios({
     method: 'get', 
-    url: `${baseUrl}/get-images`,
+    url: `${baseUrl}/get-images/`,
     headers: {
       Authorization: `Bearer ${auth.accessToken}`
     }
@@ -73,9 +73,36 @@ export const createImage = ({ auth, title, image }) => {
     }, 
     data: {
       title: title,
-      description: description,
       image: image,
       
     }
   })
 }
+
+export const deletePost = async (imageId, {auth}) => {
+  try {
+    const response = await axios.delete(`${baseUrl}/get-images/${imageId}/delete/`, {
+      headers: {
+        Authorization: `Bearer ${auth.accessToken}`
+      }
+    })
+    console.log('Post id: ', imageId)
+    console.log('Delete post: ', response);
+  } catch (error) {
+    console.error ('Error deleting post: ', error);
+    throw error;
+  }
+}
+
+export const getUserPosts = async (accessToken) => {
+  try {
+    const response = await axios.get(`${baseUrl}/get-images/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

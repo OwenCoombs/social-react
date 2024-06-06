@@ -9,6 +9,7 @@ function Header() {
       <div className="header-logo"><img src={Logo} id='logo'></img></div>
       <Link className="header-link" to="/">Home</Link>
       <Link className="header-link" to="/login">Login</Link>
+      <Link className="header-link" to="/profile">Profile</Link>
     </div>
   );
 }

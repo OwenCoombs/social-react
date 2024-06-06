@@ -3,15 +3,16 @@ import { AuthContext } from './context';
 import { createImage } from './api';
 
 
-const UploadImage = () => {
+const UploadImage = ({ updateImages }) => {
   const { auth } = useContext(AuthContext);
   const [image, setImage] = useState(undefined);
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
 
   const submit = () => {
-    createImage({ auth, title, description , image }).then(response => {
+    createImage({ auth, title, image }).then(response => {
       console.log('UPLOAD IMAGE: RESPONSE: ', response);
+      // Call the function to update images after successful upload
+      updateImages();
     });
   };
 
@@ -25,15 +26,6 @@ const UploadImage = () => {
           className="input-field"
           onChange={e => setTitle(e.target.value)}
           value={title}
-        />
-      </div>
-      <div className="input-group">
-        <label className="input-label">Post Description</label>
-        <input 
-          type="text"
-          className="input-field"
-          onChange={e => setDescription(e.target.value)}
-          value={description}
         />
       </div>
       <div className="input-group">

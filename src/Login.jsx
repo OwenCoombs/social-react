@@ -16,7 +16,7 @@ function Login() {
       username, 
       password,
       onSuccess: () => {
-        navigate("/");
+        navigate("/profile");
       }
     });
   };

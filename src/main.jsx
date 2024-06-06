@@ -9,6 +9,7 @@ import {
 // project styles
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import Profile from './profile'
 import CreateNewUser from './CreateNewUser'
 import App from './App'
 import ErrorPage from './ErrorPage'
@@ -47,13 +48,18 @@ const router = createBrowserRouter([
       {
         path: '/createnewuser',
         element: <CreateNewUser />
+      },
+      {
+        path: '/profile',
+        element: <Profile />
+
       }
     ]
   }
 ])
 
 const AuthContextProvider = ({ children }) => {
-  const [accessToken, setAccessToken] = useState(undefined)
+  const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken') || (''));
   
   const auth = {
     accessToken,
