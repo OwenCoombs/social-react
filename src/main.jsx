@@ -9,7 +9,7 @@ import {
 // project styles
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-
+import CreateNewUser from './CreateNewUser'
 import App from './App'
 import ErrorPage from './ErrorPage'
 import Header from './Header'
@@ -44,6 +44,10 @@ const router = createBrowserRouter([
         path: '/login',
         element: <Login />
       },
+      {
+        path: '/createnewuser',
+        element: <CreateNewUser />
+      }
     ]
   }
 ])

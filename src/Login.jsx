@@ -1,16 +1,24 @@
 import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./context";
 import { getToken } from "./api";
 import CreateNewUser from "./CreateNewUser";
-
 
 function Login() {
   const { auth } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const submit = () => {
-    getToken({ auth, username, password });
+    getToken({
+      auth, 
+      username, 
+      password,
+      onSuccess: () => {
+        navigate("/");
+      }
+    });
   };
 
   return (
@@ -40,7 +48,11 @@ function Login() {
         </button>
       </div>
       <hr className="divider" />
+      <div>
+     <Link to='/createnewuser'>Dont have an account? Sign up here</Link>
+      </div>
     </div>
+    
   );
 }
 

@@ -2,18 +2,19 @@ import axios from 'axios'
 
 const baseUrl = "http://127.0.0.1:8000"
 
-export const getToken = ({ auth, username, password }) => {
+export const getToken = ({ auth, username, password, onSuccess }) => {
   axios.post(`${baseUrl}/token/`, {
     username: username,
     password: password
   }).then(response => {
-    console.log('RESPONSE: ', response)
-    auth.setAccessToken(response.data.access)
+    console.log('Token Response: ', response.data);
+    auth.setAccessToken(response.data.access);
+    if (onSuccess) onSuccess();
   })
   .catch(error => {
-    console.log('ERROR: ', error)
-    auth.setAccessToken(undefined)
-  })
+    console.log('Token Error: ', error.response ? error.response.data : error.message);
+    auth.setAccessToken(undefined);
+  });
 }
 
 export const fetchUser = ({ auth }) => {
@@ -51,13 +52,30 @@ export const createUser = ({ username, password, firstName, lastName }) => {
 }
 
 
-export const getImages = ({auth}) => {
+export const getImages = ({ auth }) => {
   return axios({
-    method: 'get',
+    method: 'get', 
     url: `${baseUrl}/get-images`,
     headers: {
       Authorization: `Bearer ${auth.accessToken}`
     }
+  })
+}
 
+
+export const createImage = ({ auth, title, image }) => {
+  return axios({
+    method: 'post', 
+    url: `${baseUrl}/create-image/`,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${auth.accessToken}`
+    }, 
+    data: {
+      title: title,
+      description: description,
+      image: image,
+      
+    }
   })
 }
