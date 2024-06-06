@@ -94,6 +94,25 @@ export const deletePost = async (imageId, {auth}) => {
   }
 }
 
+
+export const updatePost = async ({imageId, auth, data}) => {
+  console.log('My name is nathen', auth)
+  try{
+    await axios.put(`${baseUrl}/get-images/${imageId}/update/`, data, {
+      headers: {
+        Authorization: `Bearer ${auth.accessToken}`
+      }
+    })
+  } catch (error) {
+    console.error ('Error updating post: ', error);
+    throw error;
+  }
+  
+}
+
+
+
+
 export const getUserPosts = async (accessToken) => {
   try {
     const response = await axios.get(`${baseUrl}/get-images/`, {

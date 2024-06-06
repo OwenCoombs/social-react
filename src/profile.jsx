@@ -2,11 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./context";
 import { getUserPosts } from "./api";
 import UploadImage from "./uploadImage";
+import Trash from "./assets/trash-solid.svg"
+import Edit from "./assets/pen-to-square-solid.svg"
+import { updatePost } from "./api";
 
 
 const YourFeed = () => {
   const [userPosts, setUserPosts] = useState([]);
   const { auth } = useContext(AuthContext);
+  const [newPost, setNewPost] = useState({
+    title: '',
+    image: null, 
+    
+  })
+  const accessToken = localStorage.getItem('accessToken')
+  console.log('##########', accessToken)
 
   const fetchUserPosts = async () => {
     try {
@@ -22,6 +32,17 @@ const YourFeed = () => {
       fetchUserPosts();
     }
   }, [auth.accessToken]);
+
+
+  const handleUpdatePost = async (imageId) => {
+    try {
+        await updatePost({imageId, auth});
+        fetchUserPosts();
+        setNewPost({title: '', image: null})
+    } catch (error) {
+        console.error("Error deleting image:", error);
+  }
+  };
 
   const handleDeletePost = async (postId) => {
     try {
@@ -41,7 +62,7 @@ const YourFeed = () => {
         {userPosts.map(post => (
           <div key={post.id} className="image-post">
             <img 
-              src={`http://127.0.0.1:8000/${post.image}`}  
+              src={`http://127.0.0.1:8000/${post.image}/`}  
               alt={post.title}
               className="image-post-img"
             />
@@ -49,9 +70,15 @@ const YourFeed = () => {
             <p className="text-center">{post.description}</p>
             <img 
               id='trash' 
+              src={Trash}
               alt="Delete" 
               onClick={() => handleDeletePost(post.id)}
             />
+            <img 
+            id="editbutton"  
+            src={Edit}
+            onClick={() => handleUpdatePost(post.id)}
+            ></img>
           </div>
         ))}
       </div>

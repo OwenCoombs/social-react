@@ -16,6 +16,7 @@ function Login() {
       username, 
       password,
       onSuccess: () => {
+        localStorage.setItem('accessToken', getToken);
         navigate("/profile");
       }
     });
