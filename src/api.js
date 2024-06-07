@@ -80,6 +80,7 @@ export const createImage = ({ auth, title, image }) => {
 }
 
 export const deletePost = async (imageId, {auth}) => {
+  
   try {
     const response = await axios.delete(`${baseUrl}/get-images/${imageId}/delete/`, {
       headers: {
@@ -94,21 +95,26 @@ export const deletePost = async (imageId, {auth}) => {
   }
 }
 
-
-export const updatePost = async ({imageId, auth, data}) => {
-  console.log('My name is nathen', auth)
-  try{
-    await axios.put(`${baseUrl}/get-images/${imageId}/update/`, data, {
+export const updatePost = async ({imageId, auth, title}) => {
+  // TODO - pass title here
+  console.log('My name is nathen', title);
+  try {
+    await axios({
+      method: 'put',
+      url: `${baseUrl}/get-images/${imageId}/update/`,
       headers: {
-        Authorization: `Bearer ${auth.accessToken}`
-      }
+        Authorization: `Bearer ${auth.accessToken}`,
+        'Content-Type': 'multipart/form-data',
+      }, 
+      data: {
+        title: 'IDK how to update'
+      } 
     })
   } catch (error) {
-    console.error ('Error updating post: ', error);
+    console.log('Error updating post: ', error);
     throw error;
   }
-  
-}
+};
 
 
 

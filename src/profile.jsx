@@ -5,6 +5,7 @@ import UploadImage from "./uploadImage";
 import Trash from "./assets/trash-solid.svg"
 import Edit from "./assets/pen-to-square-solid.svg"
 import { updatePost } from "./api";
+import { deletePost } from "./api";
 
 
 const YourFeed = () => {
@@ -38,9 +39,10 @@ const YourFeed = () => {
     try {
         await updatePost({imageId, auth});
         fetchUserPosts();
-        setNewPost({title: '', image: null})
+        setNewPost({title: newPost.title})
+        
     } catch (error) {
-        console.error("Error deleting image:", error);
+        console.log("Error updating image:", error);
   }
   };
 
